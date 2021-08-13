@@ -55,5 +55,15 @@
         /// </summary>
         /// <value></value>
         public bool ServeUnknownFileTypes { get; private set; } = false;
+
+		/// <summary>
+        /// A value indicating whether JS file bundling and minification is enabled
+        /// </summary>
+        public bool EnableJsBundling { get; private set; } = true;
+
+        /// <summary>
+        /// A value indicating whether CSS file bundling and minification is enabled
+        /// </summary>
+        public bool EnableCssBundling { get; privateset; } = true;
     }
 }

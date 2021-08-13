@@ -40,6 +40,12 @@ namespace Nop.Web.Areas.Admin.Models.Settings
         [NopResourceDisplayName("Admin.Configuration.AppSettings.Common.ServeUnknownFileTypes")]
         public bool ServeUnknownFileTypes { get; set; }
 
+        [NopResourceDisplayName("Admin.Configuration.AppSettings.Common.EnableJsBundling")]
+        public bool EnableJsBundling { get; set; }
+
+        [NopResourceDisplayName("Admin.Configuration.AppSettings.Common.EnableCssBundling")]
+        public bool EnableCssBundling { get; set; }
+
         #endregion
     }
 }

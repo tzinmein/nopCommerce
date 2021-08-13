@@ -6,9 +6,6 @@
 @using Nop.Services.Security
 @using Nop.Web.Framework.UI
 @{
-    //we do not bundle this script file (does not work for some reasons in bundle)
-    Html.AddScriptParts("~/lib_npm/tinymce/tinymce.min.js", excludeFromBundle: true);
-
     // tinyMCE language
     var language = await TinyMceHelper.GetTinyMceLanguageAsync();
 
@@ -45,6 +42,8 @@
         valid_children.Add("+body[link]");
     }
 }
+@* we do not bundle this script file (does not work for some reasons in bundle) *@
+<script src="~/lib_npm/tinymce/tinymce.min.js" asp-location="Head"></script>
 
 <script>
     $(document).ready(function() {

@@ -386,6 +386,34 @@ namespace Nop.Web.Framework.Infrastructure.Extensions
         }
 
         /// <summary>
+        /// Adds WebOptimizer to the specified <see cref="IServiceCollection"/> and enables CSS and JavaScript minification.
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddNopWebOptimizer(this IServiceCollection services)
+        {
+            var appSettings = Singleton<AppSettings>.Instance;
+
+            //add minification & bundling
+            var cssSettings = new CssBundlingSettings {
+                Minify = appSettings.CommonConfig.EnableCssBundling
+            };
+
+            var codeSettings = new CodeBundlingSettings
+            {
+                Minify = appSettings.CommonConfig.EnableJsBundling
+            };
+
+            services.AddWebOptimizer(null, cssSettings, codeSettings, pipeline => 
+            {
+                if (appSettings.CommonConfig.EnableCssBundling)
+                    pipeline.MinifyCssFiles();
+
+                if (appSettings.CommonConfig.EnableJsBundling)
+                    pipeline.MinifyJsFiles();
+            });
+        }
+
+        /// <summary>
         /// Add and configure default HTTP clients
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>

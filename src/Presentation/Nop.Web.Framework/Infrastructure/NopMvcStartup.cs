@@ -18,6 +18,8 @@ namespace Nop.Web.Framework.Infrastructure
         /// <param name="configuration">Configuration of the application</param>
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddNopWebOptimizer();
+
             //add MiniProfiler services
             services.AddNopMiniProfiler();
 
@@ -36,7 +38,13 @@ namespace Nop.Web.Framework.Infrastructure
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public void Configure(IApplicationBuilder application)
-        {
+        {            
+            //WebOptimizer should be placed before configuring static files
+            application.UseNopWebOptimizer();
+
+            //use static files feature
+            application.UseNopStaticFiles();
+
             //use MiniProfiler
             application.UseMiniProfiler();
 

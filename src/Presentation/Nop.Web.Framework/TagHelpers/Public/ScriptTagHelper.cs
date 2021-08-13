@@ -24,8 +24,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
 
         #region Properties
 
-        protected IHtmlGenerator Generator { get; set; }
-
         /// <summary>
         /// Indicates where the script should be rendered
         /// </summary>
@@ -92,10 +90,9 @@ namespace Nop.Web.Framework.TagHelpers.Public
             scriptTag.InnerHtml.SetHtmlContent(new HtmlString(script));
 
             //merge attributes
-            foreach (var attribute in context.AllAttributes)
+            foreach (var attribute in output.Attributes)
             {
-                if (!attribute.Name.StartsWith("asp-"))
-                    scriptTag.Attributes.Add(attribute.Name, attribute.Value.ToString());
+                scriptTag.Attributes.Add(attribute.Name, attribute.Value.ToString());
             }
 
             _htmlHelper.AddInlineScriptParts(Location, await scriptTag.RenderHtmlContentAsync());
@@ -103,6 +100,15 @@ namespace Nop.Web.Framework.TagHelpers.Public
             //generate nothing
             output.SuppressOutput();
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Makes sure this taghelper runs after the built in WebOptimizer.
+        /// </summary>
+        public override int Order => 12;
 
         #endregion
     }
