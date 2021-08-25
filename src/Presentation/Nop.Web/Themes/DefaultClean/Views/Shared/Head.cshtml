@@ -1,17 +1,16 @@
 ﻿@using Nop.Core
 @using Nop.Services.Helpers
 @using Nop.Web.Framework.UI
-@inject IWorkContext workContext
 @inject IThemeContext themeContext
 @inject IUserAgentHelper userAgentHelper
 @{
     Layout ="";
-    var supportRtl = (await workContext.GetWorkingLanguageAsync()).Rtl;
     var themeName = await themeContext.GetWorkingThemeNameAsync();
+    var supportRtl = await ShouldUseRtlThemeAsync();
 }
 
 @* add main CSS file *@
-<link rel="stylesheet" href="/Themes/@themeName/Content/css/styles@(supportRtl ? ".rtl" : ".")css" asp-bundle-key=".cssbundle" />
+<link rel="stylesheet" href="/Themes/@themeName/Content/css/styles@(supportRtl ? ".rtl" : "").css" asp-bundle-key=".cssbundle" />
 
 @* add jQuery UI css file *@
 <link rel="stylesheet" href="~/lib_npm/jquery-ui-dist/jquery-ui.min.css" asp-bundle-key=".cssbundle" />

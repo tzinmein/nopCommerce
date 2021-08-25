@@ -14,7 +14,7 @@ namespace Nop.Web.Framework.TagHelpers.Public
     /// "script" tag helper
     /// </summary>
     [HtmlTargetElement("script", Attributes = LOCATION_ATTRIBUTE_NAME)]
-    public class ScriptTagHelper : TagHelper
+    public class ScriptTagHelper : BaseNopTagHelper
     {
         #region Constants
 
@@ -29,13 +29,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
         /// </summary>
         [HtmlAttributeName(LOCATION_ATTRIBUTE_NAME)]
         public ResourceLocation Location { set; get; }
-
-        /// <summary>
-        /// ViewContext
-        /// </summary>
-        [HtmlAttributeNotBound]
-        [ViewContext]
-        public ViewContext ViewContext { get; set; }
 
         #endregion
 
@@ -92,7 +85,7 @@ namespace Nop.Web.Framework.TagHelpers.Public
             //merge attributes
             foreach (var attribute in output.Attributes)
             {
-                scriptTag.Attributes.Add(attribute.Name, attribute.Value.ToString());
+                scriptTag.Attributes.Add(attribute.Name, await GetAttributeValueAsync(output, attribute.Name));
             }
 
             _htmlHelper.AddInlineScriptParts(Location, await scriptTag.RenderHtmlContentAsync());
@@ -100,15 +93,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
             //generate nothing
             output.SuppressOutput();
         }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Makes sure this taghelper runs after the built in WebOptimizer.
-        /// </summary>
-        public override int Order => 12;
 
         #endregion
     }
