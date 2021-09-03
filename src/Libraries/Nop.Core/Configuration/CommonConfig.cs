@@ -64,6 +64,6 @@
         /// <summary>
         /// A value indicating whether CSS file bundling and minification is enabled
         /// </summary>
-        public bool EnableCssBundling { get; privateset; } = true;
+        public bool EnableCssBundling { get; private set; } = true;
     }
 }

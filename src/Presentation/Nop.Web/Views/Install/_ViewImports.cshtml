@@ -8,3 +8,7 @@
 @using static Nop.Services.Common.NopLinksDefaults
 @using Nop.Web.Models.Install
 @using Nop.Web.Infrastructure.Installation
+
+@removeTagHelper *, Nop.Web.Framework @* Some taghelpers cannot be used in the installation process (before the database is installed) *@
+@addTagHelper Nop.Web.Framework.TagHelpers.Admin.NopSelectTagHelper, Nop.Web.Framework
+@removeTagHelper *, WebOptimizer.Core
