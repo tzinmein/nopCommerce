@@ -407,13 +407,13 @@ namespace Nop.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the returns collection of query result records
         /// </returns>
-        public virtual async Task<IList<T>> QueryProcAsync<T>(string procedureName, params DataParameter[] parameters)
+        public virtual Task<IList<T>> QueryProcAsync<T>(string procedureName, params DataParameter[] parameters)
         {
             using var dataContext = CreateDataConnection();
             var command = new CommandInfo(dataContext, procedureName, parameters);
-            var rez = (await command.QueryProcAsync<T>())?.ToList();
+            var rez = command.QueryProc<T>().ToList();
             UpdateOutputParameters(dataContext, parameters);
-            return rez ?? new List<T>();
+            return Task.FromResult<IList<T>>(rez);
         }
 
         /// <summary>
@@ -426,10 +426,10 @@ namespace Nop.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the collection of values of specified type
         /// </returns>
-        public virtual async Task<IList<T>> QueryAsync<T>(string sql, params DataParameter[] parameters)
+        public virtual Task<IList<T>> QueryAsync<T>(string sql, params DataParameter[] parameters)
         {
             using var dataContext = CreateDataConnection();
-            return await dataContext.Query<T>(sql, parameters)?.ToListAsync() ?? new List<T>();
+            return Task.FromResult<IList<T>>(dataContext.Query<T>(sql, parameters).ToList());
         }
 
         /// <summary>
