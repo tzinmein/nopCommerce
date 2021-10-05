@@ -6,7 +6,7 @@
 @{
     Layout ="";
     var themeName = await themeContext.GetWorkingThemeNameAsync();
-    var supportRtl = await ShouldUseRtlThemeAsync();
+    var supportRtl = await Html.ShouldUseRtlThemeAsync();
 }
 
 @* add main CSS file *@

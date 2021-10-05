@@ -123,7 +123,9 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo450
             // rename locales
             var localesToRename = new[]
             {
-                new { Name = "", NewName = "" }
+                //#5834
+                new { Name = "Admin.Configuration.Settings.GeneralCommon.EnableJsBundling", NewName = "Admin.Configuration.AppSettings.WebOptimizer.EnableJsBundling" },
+                new { Name = "Admin.Configuration.Settings.GeneralCommon.EnableCssBundling", NewName = "Admin.Configuration.AppSettings.WebOptimizer.EnableCssBundling" }
             };
 
             foreach (var lang in languages)

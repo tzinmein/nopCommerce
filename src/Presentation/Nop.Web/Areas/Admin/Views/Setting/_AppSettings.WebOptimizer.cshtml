@@ -1,0 +1,22 @@
+@model AppSettingsModel
+
+<div class="card-body">
+    <div class="form-group row">
+        <div class="col-md-3">
+            <nop-label asp-for="WebOptimizerConfigModel.EnableJsBundling" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="WebOptimizerConfigModel.EnableJsBundling" />
+            <span asp-validation-for="WebOptimizerConfigModel.EnableJsBundling"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3">
+            <nop-label asp-for="WebOptimizerConfigModel.EnableCssBundling" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="WebOptimizerConfigModel.EnableCssBundling" />
+            <span asp-validation-for="WebOptimizerConfigModel.EnableCssBundling"></span>
+        </div>
+    </div>
+</div>
