@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Hosting;
 using Nop.Web.Framework.Extensions;
 using Nop.Web.Framework.UI;
 
@@ -14,15 +17,23 @@ namespace Nop.Web.Framework.TagHelpers.Public
     /// "script" tag helper
     /// </summary>
     [HtmlTargetElement("script", Attributes = LOCATION_ATTRIBUTE_NAME)]
+    [HtmlTargetElement("script", Attributes = DEBUG_SRC_ATTRIBUTE_NAME)]
     public class ScriptTagHelper : BaseNopTagHelper
     {
         #region Constants
 
         private const string LOCATION_ATTRIBUTE_NAME = "asp-location";
+        private const string DEBUG_SRC_ATTRIBUTE_NAME = "asp-debug-src";
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Script path (e.g. full debug version). If empty, then minified version will be used
+        /// </summary>
+        [HtmlAttributeName(DEBUG_SRC_ATTRIBUTE_NAME)]
+        public string DebugSrc { get; set; }
 
         /// <summary>
         /// Indicates where the script should be rendered
@@ -36,15 +47,19 @@ namespace Nop.Web.Framework.TagHelpers.Public
 
         private readonly IHtmlHelper _htmlHelper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         #endregion
 
         #region Ctor
 
-        public ScriptTagHelper(IHtmlHelper htmlHelper, IHttpContextAccessor httpContextAccessor)
+        public ScriptTagHelper(IHtmlHelper htmlHelper,
+            IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment webHostEnvironment)
         {
             _htmlHelper = htmlHelper;
             _httpContextAccessor = httpContextAccessor;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         #endregion
@@ -65,11 +80,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
-            //allow developers to ignore this parameter
-            //for example, when a request is made using AJAX and is rendered without head and footer
-            if (_httpContextAccessor.HttpContext.Items.TryGetValue("nop.IgnoreScriptTagLocation", out var value) && value is bool ignore && ignore)
-                return;
-
             //contextualize IHtmlHelper
             var viewContextAware = _htmlHelper as IViewContextAware;
             viewContextAware?.Contextualize(ViewContext);
@@ -78,20 +88,21 @@ namespace Nop.Web.Framework.TagHelpers.Public
             var childContent = await output.GetChildContentAsync();
             var script = childContent.GetContent();
 
-            //build script tag
-            var scriptTag = new TagBuilder("script");
-            scriptTag.InnerHtml.SetHtmlContent(new HtmlString(script));
+            var src = await GetAttributeValueAsync(output, "src");
 
-            //merge attributes
-            foreach (var attribute in output.Attributes)
+            if (!string.IsNullOrEmpty(src) && !string.IsNullOrEmpty(DebugSrc) && _webHostEnvironment.IsDevelopment())
             {
-                scriptTag.Attributes.Add(attribute.Name, await GetAttributeValueAsync(output, attribute.Name));
+                output.Attributes.SetAttribute("src", DebugSrc);
             }
 
-            _htmlHelper.AddInlineScriptParts(Location, await scriptTag.RenderHtmlContentAsync());
+            var tagHtml = await _htmlHelper.BuildScriptTagAsync(await GetAttributeDictionaryAsync(output), script);
 
-            //generate nothing
             output.SuppressOutput();
+
+            if (Location == ResourceLocation.None)
+                output.PostElement.AppendHtml(tagHtml + Environment.NewLine);
+            else
+                _htmlHelper.AddInlineScriptParts(Location, tagHtml);
         }
 
         #endregion

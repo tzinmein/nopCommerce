@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Nop.Core.Infrastructure;
+using Nop.Web.Framework.Extensions;
 
 namespace Nop.Web.Framework.UI
 {
@@ -101,6 +104,7 @@ namespace Nop.Web.Framework.UI
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             pageHeadBuilder.AppendMetaKeywordParts(part);
         }
+
         /// <summary>
         /// Generate all keyword parts
         /// </summary>
@@ -112,6 +116,25 @@ namespace Nop.Web.Framework.UI
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             html.AppendMetaKeywordParts(part);
             return new HtmlString(html.Encode(pageHeadBuilder.GenerateMetaKeywords()));
+        }
+
+        /// <summary>
+        /// Add script element
+        /// </summary>
+        /// <param name="html">HTML helper</param>
+        /// <param name="attributes">Dictionary of attributes that will be written to the tag</param>
+        /// <param name="code">Content of the script tag</param>
+        public static Task<string> BuildScriptTagAsync(this IHtmlHelper html, 
+            IDictionary<string, string> attributes, 
+            string code = "")
+        {
+            var scriptTag = new TagBuilder("script");
+            
+            if(!string.IsNullOrEmpty(code))
+                scriptTag.InnerHtml.SetHtmlContent(new HtmlString(code));
+            scriptTag.MergeAttributes(attributes);
+
+            return scriptTag.RenderHtmlContentAsync();
         }
 
         /// <summary>
@@ -185,18 +208,6 @@ namespace Nop.Web.Framework.UI
         {
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             return new HtmlString(pageHeadBuilder.GenerateScripts(location, bundleFiles));
-        }
-
-        /// <summary>
-        /// Add inline script element
-        /// </summary>
-        /// <param name="html">HTML helper</param>
-        /// <param name="location">A location of the script element</param>
-        /// <param name="script">Script</param>
-        public static void AddInlineScriptParts(this IHtmlHelper html, ResourceLocation location, string script)
-        {
-            var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
-            pageHeadBuilder.AddInlineScriptParts(location, script);
         }
 
         /// <summary>
@@ -410,6 +421,17 @@ namespace Nop.Web.Framework.UI
             return new HtmlString(result);
         }
 
+        /// <summary>
+        /// Add inline script element
+        /// </summary>
+        /// <param name="html">HTML helper</param>
+        /// <param name="location">A location of the script element</param>
+        /// <param name="script">Script</param>
+        public static void AddInlineScriptParts(this IHtmlHelper html, ResourceLocation location, string script)
+        {
+            var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
+            pageHeadBuilder.AddInlineScriptParts(location, script);
+        }
         /// <summary>
         /// Specify system name of admin menu item that should be selected (expanded)
         /// </summary>
