@@ -6,14 +6,6 @@ namespace Nop.Web.Framework.Configuration
 {
     public class WebOptimizerConfig : WebOptimizerOptions, IConfig
     {
-        #region Ctor
-
-        public WebOptimizerConfig()
-        {
-            AllowEmptyBundle = false;
-        }
-
-        #endregion
 		/// <summary>
         /// A value indicating whether JS file bundling and minification is enabled
         /// </summary>

@@ -118,6 +118,12 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo450
                 ["Enums.Nop.Core.Domain.Shipping.ShippingSortingEnum.Position"] = "Position",
                 ["Enums.Nop.Core.Domain.Shipping.ShippingSortingEnum.ShippingCost"] = "Shipping Cost",
                 
+
+                ["Admin.Configuration.AppSettings.WebOptimizer"] = "Bundling & minimization",
+                ["Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache"] = "Disk cache",
+                ["Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache.Hint"] = "Enable to store assets on disk",
+                ["Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory"] = "Cache directory",
+                ["Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory.Hint"] = "Path of the directory where assets will be stored if disk cache is enabled",
             }, languageId).Wait();
 
             // rename locales

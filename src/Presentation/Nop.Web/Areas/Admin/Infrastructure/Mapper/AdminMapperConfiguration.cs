@@ -213,7 +213,13 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
             CreateMap<DataConfigModel, DataConfig>();
 
             CreateMap<WebOptimizerConfig, WebOptimizerConfigModel>();
-            CreateMap<WebOptimizerConfigModel, WebOptimizerConfig>();
+            CreateMap<WebOptimizerConfigModel, WebOptimizerConfig>()
+                .ForMember(entity => entity.CdnUrl, options => options.Ignore())
+                .ForMember(entity => entity.AllowEmptyBundle, options => options.Ignore())
+                .ForMember(entity => entity.HttpsCompression, options => options.Ignore())
+                .ForMember(entity => entity.EnableTagHelperBundling, options => options.Ignore())
+                .ForMember(entity => entity.EnableCaching, options => options.Ignore())
+                .ForMember(entity => entity.EnableMemoryCache, options => options.Ignore());
         }
 
         /// <summary>
