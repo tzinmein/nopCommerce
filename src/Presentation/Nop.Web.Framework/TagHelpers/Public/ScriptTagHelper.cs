@@ -46,7 +46,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
         #region Fields
 
         private readonly IHtmlHelper _htmlHelper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         #endregion
@@ -54,11 +53,9 @@ namespace Nop.Web.Framework.TagHelpers.Public
         #region Ctor
 
         public ScriptTagHelper(IHtmlHelper htmlHelper,
-            IHttpContextAccessor httpContextAccessor,
             IWebHostEnvironment webHostEnvironment)
         {
             _htmlHelper = htmlHelper;
-            _httpContextAccessor = httpContextAccessor;
             _webHostEnvironment = webHostEnvironment;
         }
 

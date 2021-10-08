@@ -403,7 +403,8 @@ namespace Nop.Web.Framework.Infrastructure.Extensions
 
             var codeSettings = new CodeBundlingSettings
             {
-                Minify = jsBundling
+                Minify = jsBundling,
+                AdjustRelativePaths = false //disable this feature because it breaks function names that have "Url(" at the end
             };
 
             services.AddWebOptimizer(null, cssSettings, codeSettings, pipeline => 
