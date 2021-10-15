@@ -17,6 +17,16 @@ namespace Nop.Web.Framework.Configuration
         public bool EnableCssBundling { get; private set; } = true;
 
         /// <summary>
+        /// Gets or sets a suffix for the js-file name of generated bundles
+        /// </summary>
+        public string JavaScriptBundleSuffix { get; private set; } = ".scripts";
+
+        /// <summary>
+        /// Gets or sets a suffix for the css-file name of generated bundles
+        /// </summary>
+        public string CssBundleSuffix { get; private set; } = ".styles";
+
+        /// <summary>
         /// Gets a section name to load configuration
         /// </summary>
         [JsonIgnore]

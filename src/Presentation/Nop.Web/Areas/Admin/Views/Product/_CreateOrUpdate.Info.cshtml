@@ -10,12 +10,12 @@
     var stores = await storeService.GetAllStoresAsync();
 }
     @* resources for product tags input *@
-    <link rel="stylesheet" href="~/lib_npm/jquery-tageditor/jquery.caret.min.js">
-    <link rel="stylesheet" href="~/lib_npm/jquery-tageditor/jquery.tag-editor.min.js">
+    <script src="~/lib_npm/jquery-tageditor/jquery.caret.min.js"></script>
+    <script src="~/lib_npm/jquery-tageditor/jquery.tag-editor.min.js"></script>
     <link rel="stylesheet" href="~/lib_npm/jquery-tageditor/jquery.tag-editor.css">
 
 
-    <script>
+    <script asp-location="Footer">
     $(document).ready(function() {
         @if (!Model.IsLoggedInAsVendor)
         {

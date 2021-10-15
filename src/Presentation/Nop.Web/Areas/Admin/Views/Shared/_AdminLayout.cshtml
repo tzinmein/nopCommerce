@@ -50,7 +50,6 @@
 
     @*Insert favicon and app icons head code*@
     @await Component.InvokeAsync("Favicon")
-    @Html.NopInlineScripts(ResourceLocation.Head)
 </head>
 <body class="hold-transition sidebar-mini layout-fixed control-sidebar-slide-open">
     <div class="throbber">
@@ -215,6 +214,8 @@
             </div>
         </div>
     </div>
+    <script-bundle />
+    @Html.NopInlineScripts(ResourceLocation.Footer)
     <script>
         var AdminLTEOptions = {
             boxWidgetOptions: {
@@ -245,6 +246,5 @@
             $('[data-toggle="tooltip"]').tooltip({ placement: 'bottom' });
         });
     </script>
-    @Html.NopInlineScripts(ResourceLocation.Footer)
 </body>
 </html>

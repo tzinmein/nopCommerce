@@ -62,9 +62,10 @@ else
 }
 
 @Html.NopCssFiles(ResourceLocation.Head, false)
+<style-bundle />
 
 @* scripts *@
-<script src="~/lib_npm/jquery/jquery.min.js"></script>
+<script exclude-from-bundle="true" asp-location="Head" src="~/lib_npm/jquery/jquery.min.js"></script>
 <script src="~/lib_npm/jquery-ui-dist/jquery-ui.min.js"></script>
 <script src="~/lib_npm/admin-lte/js/adminlte.min.js"></script>
 <script src="~/lib_npm/overlayscrollbars/js/jquery.overlayScrollbars.min.js"></script>
@@ -111,7 +112,6 @@ else
 <script src="~/lib_npm/moment/min/moment-with-locales.min.js"></script>
 <script src="~/lib_npm/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
 <script src="~/lib_npm/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-
 <script type="text/javascript" asp-location="Footer">
         var culture = "@GetDefaultLocale()";
 
@@ -137,7 +137,6 @@ else
 <script asp-location="Footer">
         kendo.culture("@(currentKendoCulture)");
 </script>
-
 
 @Html.NopScripts(ResourceLocation.Head, false)
 @Html.NopInlineScripts(ResourceLocation.Head)

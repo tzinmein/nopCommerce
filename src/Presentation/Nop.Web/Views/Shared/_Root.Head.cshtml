@@ -35,7 +35,7 @@
     @Html.NopHeadCustom()
     @*This is used so that themes can inject content into the header*@
     @await Html.PartialAsync("Head")    
-    <link rel="stylesheet" asp-bundle-dest-key=".cssbundle" />
+    <style-bundle />
     @Html.NopCssFiles(ResourceLocation.Head)
     @Html.NopScripts(ResourceLocation.Head)
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeadHtmlTag })
@@ -54,27 +54,26 @@
 <body>
     @RenderBody()
 
-    <script src="/lib_npm/jquery/jquery.min.js" asp-bundle-key=".jsbundle"></script>
+    <script src="/lib_npm/jquery/jquery.min.js"></script>
     @* when jQuery migrate script logging is active you will see the log in the browser console *@
     @if (commonSettings.JqueryMigrateScriptLoggingActive)
     {
-        <script src="/lib_npm/jquery-migrate/jquery-migrate.js" asp-bundle-key=".jsbundle"></script>
+        <script src="/lib_npm/jquery-migrate/jquery-migrate.js"></script>
     }
     else
     {
-        <script src="/lib_npm/jquery-migrate/jquery-migrate.min.js" asp-bundle-key=".jsbundle"></script>
+        <script src="/lib_npm/jquery-migrate/jquery-migrate.min.js"></script>
     }
-    <script src="/lib_npm/jquery-ui-dist/jquery-ui.min.js" asp-bundle-key=".jsbundle"></script>
-    <script src="/lib_npm/jquery-validation/jquery.validate.min.js" asp-bundle-key=".jsbundle"></script>
-    <script src="/lib_npm/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-bundle-key=".jsbundle"></script>
+    <script src="/lib_npm/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="/lib_npm/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/lib_npm/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     
 
-    <script src="/js/public.countryselect.js" asp-bundle-key=".jsbundle"></script>
-    <script src="/js/public.ajaxcart.js" asp-bundle-key=".jsbundle"></script>
-    <script src="/js/public.common.js" asp-bundle-key=".jsbundle"></script>
+    <script src="/js/public.countryselect.js"></script>
+    <script src="/js/public.ajaxcart.js"></script>
+    <script src="/js/public.common.js"></script>
 
-    <script type="text/javascript" asp-bundle-dest-key=".jsbundle"></script>
-    <script type="text/javascript" asp-bundle-dest-key=".jsbundle.additional"></script>
+    <script-bundle />
 
     <!-- FooterSctipts  -->    
     @Html.NopScripts(ResourceLocation.Footer)

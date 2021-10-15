@@ -1,7 +1,7 @@
 ﻿@model ProductDetailsModel
 
 <link rel="stylesheet" href="~/lib_npm/magnific-popup/magnific-popup.css" />
-<script src="~/lib_npm/magnific-popup/jquery.magnific-popup.min.js" asp-location="Footer"></script>
+<script exclude-from-bundle="true" src="~/lib_npm/magnific-popup/jquery.magnific-popup.min.js" asp-location="Footer"></script>
 
 <div class="gallery">
     @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductDetailsBeforePictures, additionalData = Model })

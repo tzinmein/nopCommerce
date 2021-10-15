@@ -3,6 +3,8 @@
 @*we remove the default InputTagHelper to prevent the checkbox duplicating: https://stackoverflow.com/questions/42544961/asp-net-core-custom-input-tag-helper-rendering-duplicate-checkboxes*@
 @removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, WebOptimizer.Core
+@removeTagHelper WebOptimizer.TagHelpersDynamic.ScriptTagHelper, WebOptimizer.Core
+@removeTagHelper WebOptimizer.TagHelpersDynamic.LinkTagHelper, WebOptimizer.Core
 @addTagHelper *, Nop.Web.Framework
 @addTagHelper *, MiniProfiler.AspNetCore.Mvc
 

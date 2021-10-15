@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Nop.Web.Framework.UI;
 
-namespace Nop.Web.Framework.TagHelpers.Public
+namespace Nop.Web.Framework.TagHelpers.Shared
 {
     [HtmlTargetElement("link")]
     public class LinkTagHelper : BaseNopTagHelper
@@ -25,6 +24,15 @@ namespace Nop.Web.Framework.TagHelpers.Public
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Makes sure this taghelper runs after the built in WebOptimizer.
+        /// </summary>
+        public override int Order => 12;
+
+        #endregion
+
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (context == null)
@@ -33,19 +41,13 @@ namespace Nop.Web.Framework.TagHelpers.Public
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
-            //contextualize IHtmlHelper
-            var viewContextAware = _htmlHelper as IViewContextAware;
-            viewContextAware?.Contextualize(ViewContext);
-
             var href = await GetAttributeValueAsync(output, "href");
 
-            if (href is not null)
-            {
+            if (!string.IsNullOrEmpty(href))
                 _htmlHelper.AddCssFileParts(href);
 
-                //generate nothing
-                output.SuppressOutput();
-            }
+            //generate nothing
+            output.SuppressOutput();
         }
     }
 }

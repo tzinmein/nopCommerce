@@ -5,6 +5,8 @@
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, WebOptimizer.Core
+@removeTagHelper WebOptimizer.TagHelpersDynamic.ScriptTagHelper, WebOptimizer.Core
+@removeTagHelper WebOptimizer.TagHelpersDynamic.LinkTagHelper, WebOptimizer.Core
 @addTagHelper *, Nop.Web.Framework
 
 @using System.Globalization;

@@ -9,8 +9,8 @@
 @if (showTour)
 {
     <link rel="stylesheet" href="~/lib_npm/shepherd.js/css/shepherd.css" />
-    <script src="~/lib_npm/shepherd.js/js/shepherd.min.js" asp-location="Head"></script>
-    <script src="~/js/admintour/admin.tour.common.js" asp-location="Head"></script>
+    <script src="~/lib_npm/shepherd.js/js/shepherd.min.js"></script>
+    <script src="~/js/admintour/admin.tour.common.js"></script>
 
     int? entityId = null;
     var tourStep = (TourStep)ViewBag.TourStep;
@@ -19,8 +19,8 @@
         case TourStep.GeneralSettings:
             entityId = (await storeService.GetAllStoresAsync()).FirstOrDefault()?.Id ?? 0;
 
-            <script src="~/js/admintour/admin.tour.generalsettings.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" asp-location="Footer" src="~/js/admintour/admin.tour.generalsettings.js"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     PersonalizeStoreIntroTitle: '@T("Admin.ConfigurationSteps.PersonalizeStore.Intro.Title")',
                     PersonalizeStoreIntroText: '@T("Admin.ConfigurationSteps.PersonalizeStore.Intro.Text")',
@@ -39,8 +39,8 @@
 
         case TourStep.Store:
 
-            <script src="~/js/admintour/admin.tour.store.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true"  src="~/js/admintour/admin.tour.store.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     Back: '@T("Admin.ConfigurationSteps.Back")',
                     NextStep: '@T("Admin.ConfigurationSteps.NextStep")',
@@ -60,8 +60,8 @@
 
         case TourStep.ShippingProviders:
 
-            <script src="~/js/admintour/admin.tour.shippingproviders.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingproviders.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     ShippingProvidersProvidersTitle: '@T("Admin.ConfigurationSteps.ShippingProviders.Providers.Title")',
                     ShippingProvidersProvidersText: '@T("Admin.ConfigurationSteps.ShippingProviders.Providers.Text", OfficialSite.ShippingPlugins + Utm.OnAdminTourDocs.Replace('?', '&'))',
@@ -83,8 +83,8 @@
 
         case TourStep.ShippingManual:
 
-            <script src="~/js/admintour/admin.tour.shippingmanual.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingmanual.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     ConfigureManualSwitchTitle: '@T("Admin.ConfigurationSteps.ConfigureManual.Switch.Title")',
                     ConfigureManualSwitchText: '@T("Admin.ConfigurationSteps.ConfigureManual.Switch.Text")',
@@ -109,8 +109,8 @@
 
         case TourStep.PaymentMethods:
 
-            <script src="~/js/admintour/admin.tour.paymentmethods.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.paymentmethods.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     PaymentMethodsPaymentMethodsTitle: '@T("Admin.ConfigurationSteps.PaymentMethods.PaymentMethods.Title")',
                     PaymentMethodsPaymentMethodsText: '@T("Admin.ConfigurationSteps.PaymentMethods.PaymentMethods.Text")',
@@ -136,8 +136,8 @@
 
         case TourStep.TaxProviders:
 
-            <script src="~/js/admintour/admin.tour.taxproviders.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxproviders.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     TaxProvidersTaxProvidersTitle: '@T("Admin.ConfigurationSteps.TaxProviders.TaxProviders.Title")',
                     TaxProvidersTaxProvidersText: '@T("Admin.ConfigurationSteps.TaxProviders.TaxProviders.Text", OfficialSite.TaxPlugins + Utm.OnAdminTourDocs.Replace('?', '&'))',
@@ -159,8 +159,8 @@
 
         case TourStep.TaxManual:
 
-            <script src="~/js/admintour/admin.tour.taxmanual.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxmanual.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     TaxManualSwitchTitle: '@T("Admin.ConfigurationSteps.TaxManual.Switch.Title")',
                     TaxManualSwitchText: '@T("Admin.ConfigurationSteps.TaxManual.Switch.Text")',
@@ -182,8 +182,8 @@
 
         case TourStep.Product:
 
-            <script src="~/js/admintour/admin.tour.product.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.product.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     ProductSettingsButtonTitle: '@T("Admin.ConfigurationSteps.Product.SettingsButton.Title")',
                     ProductSettingsButtonText: '@T("Admin.ConfigurationSteps.Product.SettingsButton.Text")',
@@ -212,8 +212,8 @@
         case TourStep.EmailAccountList:
             entityId = (await emailAccountService.GetAllEmailAccountsAsync()).FirstOrDefault()?.Id ?? 0;
 
-            <script src="~/js/admintour/admin.tour.emailaccountlist.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccountlist.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     EmailAccountListEmailAccounts1Title: '@T("Admin.ConfigurationSteps.EmailAccountList.EmailAccounts1.Title")',
                     EmailAccountListEmailAccounts1Text: '@T("Admin.ConfigurationSteps.EmailAccountList.EmailAccounts1.Text")',
@@ -232,8 +232,8 @@
 
         case TourStep.EmailAccount:
 
-            <script src="~/js/admintour/admin.tour.emailaccount.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccount.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     EmailAccountEmailAddressTitle: '@T("Admin.ConfigurationSteps.EmailAccount.EmailAddress.Title")',
                     EmailAccountEmailAddressText: '@T("Admin.ConfigurationSteps.EmailAccount.EmailAddress.Text")',
@@ -268,8 +268,8 @@
         case TourStep.TopicList:
             entityId = (await topicService.GetTopicBySystemNameAsync("ShippingInfo"))?.Id ?? 0;
 
-            <script src="~/js/admintour/admin.tour.topiclist.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.topiclist.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     Done: '@T("Admin.ConfigurationSteps.Done")',
 
@@ -293,8 +293,8 @@
 
         case TourStep.Topic:
 
-            <script src="~/js/admintour/admin.tour.topic.js" asp-location="Head"></script>
-            <script>
+            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.topic.js" asp-location="Footer"></script>
+            <script asp-location="Footer">
                 var localized_data = {
                     Done: '@T("Admin.ConfigurationSteps.Done")',
 
@@ -311,7 +311,7 @@
             break;
     }
 
-    <script>
+    <script asp-location="Footer">
         localized_data.Back = '@T("Admin.ConfigurationSteps.Back")';
         localized_data.NextStep = '@T("Admin.ConfigurationSteps.NextStep")';
         localized_data.NextPage = '@T("Admin.ConfigurationSteps.NextPage")';

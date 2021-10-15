@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Hosting;
-using Nop.Web.Framework.Extensions;
 using Nop.Web.Framework.UI;
 
-namespace Nop.Web.Framework.TagHelpers.Public
+namespace Nop.Web.Framework.TagHelpers.Shared
 {
     /// <summary>
     /// "script" tag helper
@@ -40,6 +35,11 @@ namespace Nop.Web.Framework.TagHelpers.Public
         /// </summary>
         [HtmlAttributeName(LOCATION_ATTRIBUTE_NAME)]
         public ResourceLocation Location { set; get; }
+
+        /// <summary>
+        /// Makes sure this taghelper runs after the built in WebOptimizer.
+        /// </summary>
+        public override int Order => 12;
 
         #endregion
 
@@ -76,10 +76,6 @@ namespace Nop.Web.Framework.TagHelpers.Public
 
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
-
-            //contextualize IHtmlHelper
-            var viewContextAware = _htmlHelper as IViewContextAware;
-            viewContextAware?.Contextualize(ViewContext);
 
             //get JavaScript
             var childContent = await output.GetChildContentAsync();

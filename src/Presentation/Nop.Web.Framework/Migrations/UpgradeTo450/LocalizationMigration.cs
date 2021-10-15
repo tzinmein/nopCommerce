@@ -124,6 +124,10 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo450
                 ["Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache.Hint"] = "Enable to store assets on disk",
                 ["Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory"] = "Cache directory",
                 ["Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory.Hint"] = "Path of the directory where assets will be stored if disk cache is enabled",
+                ["Admin.Configuration.AppSettings.WebOptimizer.JavaScriptBundleSuffix"] = "Suffix of javascript bundle files",
+                ["Admin.Configuration.AppSettings.WebOptimizer.JavaScriptBundleSuffix.Hint"] = "Enter the key that will be put to the end of the bundle name.",
+                ["Admin.Configuration.AppSettings.WebOptimizer.CssBundleSuffix"] = "Suffix of styles bundle files",
+                ["Admin.Configuration.AppSettings.WebOptimizer.CssBundleSuffix.Hint"] = "Enter the key that will be put to the end of the bundle name.",
             }, languageId).Wait();
 
             // rename locales
