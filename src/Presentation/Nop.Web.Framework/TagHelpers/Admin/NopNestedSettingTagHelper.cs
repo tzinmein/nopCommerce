@@ -78,7 +78,7 @@ namespace Nop.Web.Framework.TagHelpers.Admin
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
-            var parentSettingName = For.Name;
+            var parentSettingName = For.Name.Replace(".", "_"); // replace dots from complex property names
 
             var random = CommonHelper.GenerateRandomInteger();
             var nestedSettingId = $"nestedSetting{random}";
