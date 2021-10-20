@@ -15,6 +15,8 @@ namespace Nop.Web.Framework.Configuration
 
         #endregion
 
+        #region Properties
+
         /// <summary>
         /// A value indicating whether JS file bundling and minification is enabled
         /// </summary>
@@ -40,5 +42,7 @@ namespace Nop.Web.Framework.Configuration
         /// </summary>
         [JsonIgnore]
         public string Name => "WebOptimizer";
+
+        #endregion
     }
 }

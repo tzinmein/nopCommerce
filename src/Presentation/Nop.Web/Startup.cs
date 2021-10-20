@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nop.Core;
-using Nop.Core.Infrastructure;
 using Nop.Web.Framework.Infrastructure.Extensions;
-using WebOptimizer;
 
 namespace Nop.Web
 {

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,6 +56,11 @@ namespace Nop.Web.Framework.TagHelpers
             };
         }
 
+        /// <summary>
+        /// Get attributes from tag helper output as collection of key/string value pairs
+        /// </summary>
+        /// <param name="output">A stateful HTML element used to generate an HTML tag</param>
+        /// <returns>Collection of key/string value pairs</returns>
         protected static async Task<IDictionary<string, string>> GetAttributeDictionaryAsync(TagHelperOutput output)
         {
             if (output is null)

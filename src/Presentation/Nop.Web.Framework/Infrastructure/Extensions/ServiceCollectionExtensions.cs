@@ -397,7 +397,8 @@ namespace Nop.Web.Framework.Infrastructure.Extensions
             var jsBundling = appSettings.Get<WebOptimizerConfig>().EnableJsBundling;
 
             //add minification & bundling
-            var cssSettings = new CssBundlingSettings {
+            var cssSettings = new CssBundlingSettings
+            {
                 Minify = cssBundling
             };
 
@@ -407,7 +408,7 @@ namespace Nop.Web.Framework.Infrastructure.Extensions
                 AdjustRelativePaths = false //disable this feature because it breaks function names that have "Url(" at the end
             };
 
-            services.AddWebOptimizer(null, cssSettings, codeSettings, pipeline => 
+            services.AddWebOptimizer(null, cssSettings, codeSettings, pipeline =>
             {
                 if (cssBundling)
                     pipeline.MinifyCssFiles();
