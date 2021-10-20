@@ -6,7 +6,16 @@ namespace Nop.Web.Framework.Configuration
 {
     public class WebOptimizerConfig : WebOptimizerOptions, IConfig
     {
-		/// <summary>
+        #region Ctor
+
+        public WebOptimizerConfig()
+        {
+            EnableDiskCache = true;
+        }
+
+        #endregion
+
+        /// <summary>
         /// A value indicating whether JS file bundling and minification is enabled
         /// </summary>
         public bool EnableJsBundling { get; private set; } = true;

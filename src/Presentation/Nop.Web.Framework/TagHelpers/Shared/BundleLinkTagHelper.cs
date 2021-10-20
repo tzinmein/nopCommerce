@@ -64,6 +64,9 @@ namespace Nop.Web.Framework.TagHelpers.Shared
 
             var bundleKey = _appSettings.Get<WebOptimizerConfig>().CssBundleSuffix;
 
+            if (System.Globalization.CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft)
+                bundleKey = $"{bundleKey}.rtl".ToLowerInvariant();
+
             //to avoid collisions in controllers with the same names
             if (ViewContext.RouteData.Values.TryGetValue("area", out var area))
                 bundleKey = $"{bundleKey}.{area}".ToLowerInvariant();

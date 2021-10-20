@@ -14,7 +14,7 @@ namespace Nop.Web.Areas.Admin.Models.Settings
         public bool EnableCssBundling { get; set; }
 
         [NopResourceDisplayName("Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache")]
-        public bool? EnableDiskCache { get; set; }
+        public bool EnableDiskCache { get; set; }
 
         [NopResourceDisplayName("Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory")]
         public string CacheDirectory { get; set; }
