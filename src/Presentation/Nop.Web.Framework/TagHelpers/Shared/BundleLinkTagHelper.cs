@@ -11,6 +11,9 @@ using Nop.Web.Framework.Configuration;
 
 namespace Nop.Web.Framework.TagHelpers.Shared
 {
+    /// <summary>
+    /// CSS bundling tag helper
+    /// </summary>
     [HtmlTargetElement(ASSET_TAG_NAME)]
     [HtmlTargetElement(BUNDLE_TAG_NAME)]
     public class BundleLinkTagHelper : WebOptimizer.TagHelpersDynamic.LinkTagHelper

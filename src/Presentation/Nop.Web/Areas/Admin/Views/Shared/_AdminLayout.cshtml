@@ -3,6 +3,7 @@
 @inject IPermissionService permissionService
 @inject ICustomerService customerService
 @inject IEventPublisher eventPublisher
+@inject LocalizationSettings localizationSettings
 @inject StoreInformationSettings storeInformationSettings
 @inject Nop.Services.Localization.ILanguageService languageService
 @using System.Globalization
@@ -17,10 +18,6 @@
 
 @{
     var returnUrl = webHelper.GetRawUrl(Context.Request);
-    var currentCulture = CultureInfo.CurrentCulture;
-
-    var dir = currentCulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
-    var twoLetter = currentCulture.TwoLetterISOLanguageName;
 
     //page title
     string adminPageTitle = !string.IsNullOrWhiteSpace(ViewBag.PageTitle) ? ViewBag.PageTitle + " / " : "";
@@ -38,7 +35,7 @@
     //info: we specify "Admin" area for actions and widgets here for cases when we use this layout in a plugin that is running in a different area than "admin"
 }
 <!DOCTYPE html>
-<html lang="@twoLetter" dir="@dir">
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" dir="@Html.GetUIDirection(localizationSettings.IgnoreRtlPropertyForAdminArea)">
 <head>
     <title>@adminPageTitle</title>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
@@ -46,8 +43,8 @@
     @Html.NopHeadCustom()
     
     @* CSS & Script resources *@
-    @await Html.PartialAsync("_AdminScripts", currentCulture)
-
+    @{ await Html.RenderPartialAsync("_AdminScripts");  }
+    
     @*Insert favicon and app icons head code*@
     @await Component.InvokeAsync("Favicon")
 </head>
@@ -204,7 +201,7 @@
                                 <div class="col-md-4 col-xs-12"></div>
                             }
                             <div class="col-md-4 col-xs-12 text-center">
-                                @((await dateTimeHelper.ConvertToUserTimeAsync(DateTime.Now)).ToString("f", currentCulture))
+                                @((await dateTimeHelper.ConvertToUserTimeAsync(DateTime.Now)).ToString("f", CultureInfo.CurrentCulture))
                             </div>
                             <div class="col-md-4 col-xs-12 text-md-right text-center">
                                 <b>nopCommerce version @NopVersion.FULL_VERSION</b>

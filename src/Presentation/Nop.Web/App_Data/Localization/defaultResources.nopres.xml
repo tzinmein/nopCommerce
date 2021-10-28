@@ -4596,11 +4596,14 @@
   <LocaleResource Name="Admin.Configuration.AppSettings.Plugin.UseUnsafeLoadAssembly.Hint">
     <Value>Enable this setting to load an assembly into the load-from context, bypassing some security checks.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer">
+    <Value>Bundling &amp; minimization</Value>
+  </LocaleResource>
   <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory">
     <Value>Cache directory</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.CacheDirectory.Hint">
-    <Value>Path of the directory where assets will be stored if disk cache is enabled</Value>
+    <Value>Path of the directory where assets will be stored if disk cache is enabled.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.CssBundleSuffix">
     <Value>Suffix of styles bundle files</Value>
@@ -4614,10 +4617,16 @@
   <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableCssBundling.Hint">
     <Value>Enable to combine (bundle) multiple CSS files into a single file. Do not enable if you're running nopCommerce in IIS virtual directory. And please note it could take up to two minutes for changes to existing files to be applied (when enabled).</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableJsBundling">
+  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache">
+    <Value>Enable disk cache</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableDiskCache.Hint">
+    <Value>Check to store assets on disk.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableJavaScriptBundling">
     <Value>JavaScript bundling and minification</Value>
   </LocaleResource>
-  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableJsBundling.Hint">
+  <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.EnableJavaScriptBundling.Hint">
     <Value>Enable to combine (bundle) multiple JavaScript files into a single file. And please note it could take up to two minutes for changes to existing files to be applied (when enabled).</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Configuration.AppSettings.WebOptimizer.JavaScriptBundleSuffix">

@@ -7,12 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Nop.Core;
 using Nop.Core.Configuration;
 using Nop.Web.Framework.Configuration;
 using Nop.Web.Framework.UI;
 
 namespace Nop.Web.Framework.TagHelpers.Shared
 {
+    /// <summary>
+    /// Script bundling tag helper
+    /// </summary>
     [HtmlTargetElement(ASSET_TAG_NAME, Attributes = EXCLUDE_FROM_BUNDLE_ATTRIBUTE_NAME)]
     [HtmlTargetElement(ASSET_TAG_NAME)]
     [HtmlTargetElement(BUNDLE_TAG_NAME)]
@@ -22,7 +26,7 @@ namespace Nop.Web.Framework.TagHelpers.Shared
 
         private const string ASSET_TAG_NAME = "script";
         private const string BUNDLE_TAG_NAME = "script-bundle";
-        private const string EXCLUDE_FROM_BUNDLE_ATTRIBUTE_NAME = "exclude-from-bundle";
+        private const string EXCLUDE_FROM_BUNDLE_ATTRIBUTE_NAME = "asp-exclude-from-bundle";
 
         #endregion
 
@@ -60,16 +64,12 @@ namespace Nop.Web.Framework.TagHelpers.Shared
                 throw new ArgumentNullException(nameof(output));
 
             if (!output.Attributes.ContainsName("type")) // skip other types e.g. text/template
-                output.Attributes.SetAttribute("type", "text/javascript");
+                output.Attributes.SetAttribute("type", MimeTypes.TextJavascript);
 
             output.TagName = ASSET_TAG_NAME;
             output.TagMode = TagMode.StartTagAndEndTag;
 
-            if (!_appSettings.Get<WebOptimizerConfig>().EnableJsBundling)
-            {
-                return;
-            }
-            else if (ExcludeFromBundle == true)
+            if (ExcludeFromBundle == true || !_appSettings.Get<WebOptimizerConfig>().EnableJsBundling)
             {
                 output.Attributes.SetAttribute("src", Src?.TrimStart('~'));
                 return;

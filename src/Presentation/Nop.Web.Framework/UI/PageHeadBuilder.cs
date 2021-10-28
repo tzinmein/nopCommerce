@@ -201,9 +201,8 @@ namespace Nop.Web.Framework.UI
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
         /// <param name="isAsync">A value indicating whether to add an attribute "async" or not for js files</param>
-        public virtual void AddScriptParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle, bool isAsync)
+        public virtual void AddScriptParts(ResourceLocation location, string src, string debugSrc, bool isAsync)
         {
             if (!_scriptParts.ContainsKey(location))
                 _scriptParts.Add(location, new List<ScriptReferenceMeta>());
@@ -216,7 +215,6 @@ namespace Nop.Web.Framework.UI
 
             _scriptParts[location].Add(new ScriptReferenceMeta
             {
-                ExcludeFromBundle = excludeFromBundle,
                 IsAsync = isAsync,
                 Src = src,
                 DebugSrc = debugSrc
@@ -228,9 +226,8 @@ namespace Nop.Web.Framework.UI
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
         /// <param name="isAsync">A value indicating whether to add an attribute "async" or not for js files</param>
-        public virtual void AppendScriptParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle, bool isAsync)
+        public virtual void AppendScriptParts(ResourceLocation location, string src, string debugSrc, bool isAsync)
         {
             if (!_scriptParts.ContainsKey(location))
                 _scriptParts.Add(location, new List<ScriptReferenceMeta>());
@@ -243,7 +240,6 @@ namespace Nop.Web.Framework.UI
 
             _scriptParts[location].Insert(0, new ScriptReferenceMeta
             {
-                ExcludeFromBundle = excludeFromBundle,
                 IsAsync = isAsync,
                 Src = src,
                 DebugSrc = debugSrc
@@ -254,9 +250,8 @@ namespace Nop.Web.Framework.UI
         /// Generate all script parts
         /// </summary>
         /// <param name="location">A location of the script element</param>
-        /// <param name="bundleFiles">A value indicating whether to bundle script elements</param>
         /// <returns>Generated string</returns>
-        public virtual string GenerateScripts(ResourceLocation location, bool? bundleFiles = null)
+        public virtual string GenerateScripts(ResourceLocation location)
         {
             if (!_scriptParts.ContainsKey(location) || _scriptParts[location] == null)
                 return "";
@@ -343,8 +338,7 @@ namespace Nop.Web.Framework.UI
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
-        public virtual void AddCssFileParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle = false)
+        public virtual void AddCssFileParts(ResourceLocation location, string src, string debugSrc)
         {
             if (!_cssParts.ContainsKey(location))
                 _cssParts.Add(location, new List<CssReferenceMeta>());
@@ -357,7 +351,6 @@ namespace Nop.Web.Framework.UI
 
             _cssParts[location].Add(new CssReferenceMeta
             {
-                ExcludeFromBundle = excludeFromBundle,
                 Src = src,
                 DebugSrc = debugSrc
             });
@@ -368,8 +361,7 @@ namespace Nop.Web.Framework.UI
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
-        public virtual void AppendCssFileParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle = false)
+        public virtual void AppendCssFileParts(ResourceLocation location, string src, string debugSrc)
         {
             if (!_cssParts.ContainsKey(location))
                 _cssParts.Add(location, new List<CssReferenceMeta>());
@@ -382,7 +374,6 @@ namespace Nop.Web.Framework.UI
 
             _cssParts[location].Insert(0, new CssReferenceMeta
             {
-                ExcludeFromBundle = excludeFromBundle,
                 Src = src,
                 DebugSrc = debugSrc
             });
@@ -392,9 +383,8 @@ namespace Nop.Web.Framework.UI
         /// Generate all CSS parts
         /// </summary>
         /// <param name="location">A location of the script element</param>
-        /// <param name="bundleFiles">A value indicating whether to bundle script elements</param>
         /// <returns>Generated string</returns>
-        public virtual string GenerateCssFiles(ResourceLocation location, bool? bundleFiles = null)
+        public virtual string GenerateCssFiles(ResourceLocation location)
         {
             if (!_cssParts.ContainsKey(location) || _cssParts[location] == null)
                 return "";
@@ -571,11 +561,6 @@ namespace Nop.Web.Framework.UI
         private class ScriptReferenceMeta : IEquatable<ScriptReferenceMeta>
         {
             /// <summary>
-            /// A value indicating whether to exclude the script from bundling
-            /// </summary>
-            public bool ExcludeFromBundle { get; set; }
-
-            /// <summary>
             /// A value indicating whether to load the script asynchronously 
             /// </summary>
             public bool IsAsync { get; set; }
@@ -616,8 +601,6 @@ namespace Nop.Web.Framework.UI
         /// </summary>
         private class CssReferenceMeta : IEquatable<CssReferenceMeta>
         {
-            public bool ExcludeFromBundle { get; set; }
-
             /// <summary>
             /// Src for production
             /// </summary>

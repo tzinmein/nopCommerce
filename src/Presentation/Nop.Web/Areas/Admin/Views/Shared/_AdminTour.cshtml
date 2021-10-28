@@ -19,7 +19,7 @@
         case TourStep.GeneralSettings:
             entityId = (await storeService.GetAllStoresAsync()).FirstOrDefault()?.Id ?? 0;
 
-            <script exclude-from-bundle="true" asp-location="Footer" src="~/js/admintour/admin.tour.generalsettings.js"></script>
+            <script asp-exclude-from-bundle="true" asp-location="Footer" src="~/js/admintour/admin.tour.generalsettings.js"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     PersonalizeStoreIntroTitle: '@T("Admin.ConfigurationSteps.PersonalizeStore.Intro.Title")',
@@ -39,7 +39,7 @@
 
         case TourStep.Store:
 
-            <script exclude-from-bundle="true"  src="~/js/admintour/admin.tour.store.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true"  src="~/js/admintour/admin.tour.store.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     Back: '@T("Admin.ConfigurationSteps.Back")',
@@ -60,7 +60,7 @@
 
         case TourStep.ShippingProviders:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingproviders.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingproviders.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     ShippingProvidersProvidersTitle: '@T("Admin.ConfigurationSteps.ShippingProviders.Providers.Title")',
@@ -83,7 +83,7 @@
 
         case TourStep.ShippingManual:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingmanual.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.shippingmanual.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     ConfigureManualSwitchTitle: '@T("Admin.ConfigurationSteps.ConfigureManual.Switch.Title")',
@@ -109,7 +109,7 @@
 
         case TourStep.PaymentMethods:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.paymentmethods.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.paymentmethods.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     PaymentMethodsPaymentMethodsTitle: '@T("Admin.ConfigurationSteps.PaymentMethods.PaymentMethods.Title")',
@@ -136,7 +136,7 @@
 
         case TourStep.TaxProviders:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxproviders.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxproviders.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     TaxProvidersTaxProvidersTitle: '@T("Admin.ConfigurationSteps.TaxProviders.TaxProviders.Title")',
@@ -159,7 +159,7 @@
 
         case TourStep.TaxManual:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxmanual.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.taxmanual.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     TaxManualSwitchTitle: '@T("Admin.ConfigurationSteps.TaxManual.Switch.Title")',
@@ -182,7 +182,7 @@
 
         case TourStep.Product:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.product.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.product.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     ProductSettingsButtonTitle: '@T("Admin.ConfigurationSteps.Product.SettingsButton.Title")',
@@ -212,7 +212,7 @@
         case TourStep.EmailAccountList:
             entityId = (await emailAccountService.GetAllEmailAccountsAsync()).FirstOrDefault()?.Id ?? 0;
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccountlist.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccountlist.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     EmailAccountListEmailAccounts1Title: '@T("Admin.ConfigurationSteps.EmailAccountList.EmailAccounts1.Title")',
@@ -232,7 +232,7 @@
 
         case TourStep.EmailAccount:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccount.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.emailaccount.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     EmailAccountEmailAddressTitle: '@T("Admin.ConfigurationSteps.EmailAccount.EmailAddress.Title")',
@@ -268,7 +268,7 @@
         case TourStep.TopicList:
             entityId = (await topicService.GetTopicBySystemNameAsync("ShippingInfo"))?.Id ?? 0;
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.topiclist.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.topiclist.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     Done: '@T("Admin.ConfigurationSteps.Done")',
@@ -293,7 +293,7 @@
 
         case TourStep.Topic:
 
-            <script exclude-from-bundle="true" src="~/js/admintour/admin.tour.topic.js" asp-location="Footer"></script>
+            <script asp-exclude-from-bundle="true" src="~/js/admintour/admin.tour.topic.js" asp-location="Footer"></script>
             <script asp-location="Footer">
                 var localized_data = {
                     Done: '@T("Admin.ConfigurationSteps.Done")',

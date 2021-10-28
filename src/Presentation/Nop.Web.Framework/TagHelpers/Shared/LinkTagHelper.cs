@@ -6,8 +6,11 @@ using Nop.Web.Framework.UI;
 
 namespace Nop.Web.Framework.TagHelpers.Shared
 {
+    /// <summary>
+    /// "link" tag helper
+    /// </summary>
     [HtmlTargetElement("link")]
-    public class LinkTagHelper : BaseNopTagHelper
+    public class LinkTagHelper : TagHelper
     {
         #region Fields
 
@@ -24,14 +27,7 @@ namespace Nop.Web.Framework.TagHelpers.Shared
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Makes sure this taghelper runs after the built in WebOptimizer.
-        /// </summary>
-        public override int Order => 12;
-
-        #endregion
+        #region Methods
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
@@ -41,7 +37,7 @@ namespace Nop.Web.Framework.TagHelpers.Shared
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
-            var href = await GetAttributeValueAsync(output, "href");
+            var href = await output.GetAttributeValueAsync("href");
 
             if (!string.IsNullOrEmpty(href))
                 _htmlHelper.AddCssFileParts(href);
@@ -49,5 +45,16 @@ namespace Nop.Web.Framework.TagHelpers.Shared
             //generate nothing
             output.SuppressOutput();
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Makes sure this taghelper runs after the built in WebOptimizer.
+        /// </summary>
+        public override int Order => 12;
+
+        #endregion
     }
 }

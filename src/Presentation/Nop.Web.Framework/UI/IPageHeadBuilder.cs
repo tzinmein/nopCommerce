@@ -66,9 +66,8 @@
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
         /// <param name="isAsync">A value indicating whether to add an attribute "async" or not for js files</param>
-        void AddScriptParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle, bool isAsync);
+        void AddScriptParts(ResourceLocation location, string src, string debugSrc, bool isAsync);
 
         /// <summary>
         /// Append script element
@@ -76,17 +75,15 @@
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
         /// <param name="isAsync">A value indicating whether to add an attribute "async" or not for js files</param>
-        void AppendScriptParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle, bool isAsync);
+        void AppendScriptParts(ResourceLocation location, string src, string debugSrc, bool isAsync);
 
         /// <summary>
         /// Generate all script parts
         /// </summary>
         /// <param name="location">A location of the script element</param>
-        /// <param name="bundleFiles">A value indicating whether to bundle script elements</param>
         /// <returns>Generated string</returns>
-        string GenerateScripts(ResourceLocation location, bool? bundleFiles = null);
+        string GenerateScripts(ResourceLocation location);
 
         /// <summary>
         /// Add inline script element
@@ -115,8 +112,7 @@
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
-        void AddCssFileParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle = false);
+        void AddCssFileParts(ResourceLocation location, string src, string debugSrc);
 
         /// <summary>
         /// Append CSS element
@@ -124,16 +120,14 @@
         /// <param name="location">A location of the script element</param>
         /// <param name="src">Script path (minified version)</param>
         /// <param name="debugSrc">Script path (full debug version). If empty, then minified version will be used</param>
-        /// <param name="excludeFromBundle">A value indicating whether to exclude this script from bundling</param>
-        void AppendCssFileParts(ResourceLocation location, string src, string debugSrc, bool excludeFromBundle = false);
+        void AppendCssFileParts(ResourceLocation location, string src, string debugSrc);
 
         /// <summary>
         /// Generate all CSS parts
         /// </summary>
         /// <param name="location">A location of the script element</param>
-        /// <param name="bundleFiles">A value indicating whether to bundle script elements</param>
         /// <returns>Generated string</returns>
-        string GenerateCssFiles(ResourceLocation location, bool? bundleFiles = null);
+        string GenerateCssFiles(ResourceLocation location);
 
         /// <summary>
         /// Add canonical URL element to the <![CDATA[<head>]]>

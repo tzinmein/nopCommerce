@@ -3,11 +3,14 @@ using Nop.Web.Framework.Mvc.ModelBinding;
 
 namespace Nop.Web.Areas.Admin.Models.Settings
 {
+    /// <summary>
+    /// Represents WebOptimizer config model
+    /// </summary>
     public partial record WebOptimizerConfigModel : BaseNopModel, IConfigModel
     {
         #region Properties
 
-        [NopResourceDisplayName("Admin.Configuration.AppSettings.WebOptimizer.EnableJsBundling")]
+        [NopResourceDisplayName("Admin.Configuration.AppSettings.WebOptimizer.EnableJavaScriptBundling")]
         public bool EnableJsBundling { get; set; }
 
         [NopResourceDisplayName("Admin.Configuration.AppSettings.WebOptimizer.EnableCssBundling")]
