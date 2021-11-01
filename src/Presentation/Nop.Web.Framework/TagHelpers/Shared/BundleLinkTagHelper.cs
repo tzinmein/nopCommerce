@@ -1,13 +1,12 @@
-using System;
-using System.Text.Encodings.Web;
+﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Nop.Core.Configuration;
 using Nop.Web.Framework.Configuration;
+using WebOptimizer;
+using WebOptimizer.Extensions;
 
 namespace Nop.Web.Framework.TagHelpers.Shared
 {
@@ -16,39 +15,38 @@ namespace Nop.Web.Framework.TagHelpers.Shared
     /// </summary>
     [HtmlTargetElement(ASSET_TAG_NAME)]
     [HtmlTargetElement(BUNDLE_TAG_NAME)]
-    public class BundleLinkTagHelper : WebOptimizer.TagHelpersDynamic.LinkTagHelper
+    public class BundleLinkTagHelper : TagHelper
     {
         #region Constants
 
         private const string ASSET_TAG_NAME = "link";
         private const string BUNDLE_TAG_NAME = "style-bundle";
+        private const string BUNDLE_DESTINATION_KEY_NAME = "asp-bundle-dest-key";
+        private const string BUNDLE_KEY_NAME = "asp-bundle-key";
+        private const string EXCLUDE_FROM_BUNDLE_ATTRIBUTE_NAME = "asp-exclude-from-bundle";
+        private const string HREF_ATTRIBUTE_NAME = "href";
 
         #endregion
 
         #region Fields
 
         private readonly AppSettings _appSettings;
+        private readonly IAssetPipeline _assetPipeline;
 
         #endregion
 
         #region Ctor
 
-        public BundleLinkTagHelper(
-            AppSettings appSettings,
-            IWebHostEnvironment hostingEnvironment,
-            TagHelperMemoryCacheProvider cache,
-            IFileVersionProvider fileVersionProvider,
-            HtmlEncoder htmlEncoder,
-            JavaScriptEncoder javaScriptEncoder,
-            IUrlHelperFactory urlHelperFactory,
-            IServiceProvider serviceProvider) : base(hostingEnvironment, cache, fileVersionProvider, htmlEncoder, javaScriptEncoder, urlHelperFactory, serviceProvider)
+        public BundleLinkTagHelper(AppSettings appSettings, IAssetPipeline assetPipeline)
         {
             _appSettings = appSettings;
+            _assetPipeline = assetPipeline ?? throw new ArgumentNullException(nameof(assetPipeline));
         }
 
         #endregion
 
         #region Methods
+
         public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (context is null)
@@ -62,26 +60,53 @@ namespace Nop.Web.Framework.TagHelpers.Shared
             output.Attributes.SetAttribute("rel", "stylesheet");
             output.TagMode = TagMode.SelfClosing;
 
-            if (!_appSettings.Get<WebOptimizerConfig>().EnableCssBundling)
-                return Task.CompletedTask;
-
-            var bundleKey = _appSettings.Get<WebOptimizerConfig>().CssBundleSuffix;
-
-            if (System.Globalization.CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft)
-                bundleKey = $"{bundleKey}.rtl".ToLowerInvariant();
+            var bundleSuffix = _appSettings.Get<WebOptimizerConfig>().CssBundleSuffix;
 
             //to avoid collisions in controllers with the same names
             if (ViewContext.RouteData.Values.TryGetValue("area", out var area))
-                bundleKey = $"{bundleKey}.{area}".ToLowerInvariant();
+                bundleSuffix = $"{bundleSuffix}.{area}".ToLowerInvariant();
 
-            if (!string.IsNullOrEmpty(Href) && string.IsNullOrEmpty(BundleKey))
-                BundleKey = bundleKey;
+            if (string.Equals(context.TagName, BUNDLE_TAG_NAME))
+                BundleDestinationKey ??= bundleSuffix;
+            else
+                BundleKey ??= bundleSuffix;
 
-            if (string.Equals(context.TagName, BUNDLE_TAG_NAME) && string.IsNullOrEmpty(BundleDestinationKey))
-                BundleDestinationKey = bundleKey;
+            if (!ExcludeFromBundle)
+                output.HandleCssBundle(_assetPipeline, ViewContext, _appSettings.Get<WebOptimizerConfig>(), Href, BundleKey, BundleDestinationKey);
+            else
+                output.Attributes.SetAttribute("href", Href);
 
-            return base.ProcessAsync(context, output);
+            return Task.CompletedTask;
         }
+
+        #endregion
+
+        #region Properties
+
+        [HtmlAttributeName(EXCLUDE_FROM_BUNDLE_ATTRIBUTE_NAME)]
+        public bool ExcludeFromBundle { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [HtmlAttributeName(BUNDLE_KEY_NAME)]
+        public string BundleKey { get; set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [HtmlAttributeName(BUNDLE_DESTINATION_KEY_NAME)]
+        public string BundleDestinationKey { get; set; }
+
+        [HtmlAttributeName(HREF_ATTRIBUTE_NAME)]
+        public string Href { get; set; }
+
+        /// <summary>
+        /// The <see cref="ViewContext"/>.
+        /// </summary>
+        [HtmlAttributeNotBound]
+        [ViewContext]
+        public ViewContext ViewContext { get; set; } = default;
 
         #endregion
     }

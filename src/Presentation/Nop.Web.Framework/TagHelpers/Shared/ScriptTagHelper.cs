@@ -19,30 +19,10 @@ namespace Nop.Web.Framework.TagHelpers.Shared
     {
         #region Constants
 
-        private const string LOCATION_ATTRIBUTE_NAME = "asp-location";
         private const string DEBUG_SRC_ATTRIBUTE_NAME = "asp-debug-src";
+        private const string LOCATION_ATTRIBUTE_NAME = "asp-location";
         private const string SCRIPT_TAG_NAME = "script";
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Script path (e.g. full debug version). If empty, then minified version will be used
-        /// </summary>
-        [HtmlAttributeName(DEBUG_SRC_ATTRIBUTE_NAME)]
-        public string DebugSrc { get; set; }
-
-        /// <summary>
-        /// Indicates where the script should be rendered
-        /// </summary>
-        [HtmlAttributeName(LOCATION_ATTRIBUTE_NAME)]
-        public ResourceLocation Location { set; get; }
-
-        /// <summary>
-        /// Makes sure this taghelper runs after the built in WebOptimizer.
-        /// </summary>
-        public override int Order => 12;
+        private const string SRC_ATTRIBUTE_NAME = "src";
 
         #endregion
 
@@ -84,29 +64,55 @@ namespace Nop.Web.Framework.TagHelpers.Shared
             var childContent = await output.GetChildContentAsync();
             var script = childContent.GetContent();
 
-            var src = await output.GetAttributeValueAsync("src");
+            output.Attributes.RemoveAll(SRC_ATTRIBUTE_NAME);
 
-            if (!string.IsNullOrEmpty(src) && !string.IsNullOrEmpty(DebugSrc) && _webHostEnvironment.IsDevelopment())
-            {
-                output.Attributes.SetAttribute("src", DebugSrc);
-            }
+            if (!string.IsNullOrEmpty(DebugSrc) && _webHostEnvironment.IsDevelopment())
+                output.Attributes.SetAttribute(SRC_ATTRIBUTE_NAME, DebugSrc);
+            else if (!string.IsNullOrEmpty(Src))
+                output.Attributes.SetAttribute(SRC_ATTRIBUTE_NAME, Src.TrimStart('~'));
 
             var scriptTag = new TagBuilder(SCRIPT_TAG_NAME);
-            
-            if(!string.IsNullOrEmpty(script))
+
+            if (!string.IsNullOrEmpty(script))
                 scriptTag.InnerHtml.SetHtmlContent(new HtmlString(script));
 
             scriptTag.MergeAttributes(await output.GetAttributeDictionaryAsync());
-            
-            var tagHtml = await scriptTag.RenderHtmlContentAsync();
-
             output.SuppressOutput();
+
+            var tagHtml = await scriptTag.RenderHtmlContentAsync();
 
             if (Location == ResourceLocation.None)
                 output.PostElement.AppendHtml(tagHtml + Environment.NewLine);
             else
                 _htmlHelper.AddInlineScriptParts(Location, tagHtml);
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Script path (e.g. full debug version). If empty, then minified version will be used
+        /// </summary>
+        [HtmlAttributeName(DEBUG_SRC_ATTRIBUTE_NAME)]
+        public string DebugSrc { get; set; }
+
+        /// <summary>
+        /// Indicates where the script should be rendered
+        /// </summary>
+        [HtmlAttributeName(LOCATION_ATTRIBUTE_NAME)]
+        public ResourceLocation Location { set; get; }
+
+        /// <summary>
+        /// Makes sure this taghelper runs after the built in WebOptimizer.
+        /// </summary>
+        public override int Order => 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HtmlAttributeName(SRC_ATTRIBUTE_NAME)]
+        public string Src { get; set; }
 
         #endregion
     }

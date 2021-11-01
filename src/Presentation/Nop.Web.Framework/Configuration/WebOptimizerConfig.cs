@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Nop.Core.Configuration;
 using WebOptimizer;
 
@@ -11,6 +11,7 @@ namespace Nop.Web.Framework.Configuration
         public WebOptimizerConfig()
         {
             EnableDiskCache = true;
+            EnableTagHelperBundling = true;
         }
 
         #endregion
