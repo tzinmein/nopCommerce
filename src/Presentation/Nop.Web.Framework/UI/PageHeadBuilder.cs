@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Hosting;
 using Nop.Core;
 using Nop.Core.Domain.Seo;
+using WebOptimizer;
 
 namespace Nop.Web.Framework.UI
 {
@@ -292,6 +293,7 @@ namespace Nop.Web.Framework.UI
 
             _inlineScriptParts[location].Add(script);
         }
+
         /// <summary>
         /// Append inline script element
         /// </summary>
