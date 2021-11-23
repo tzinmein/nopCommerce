@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -48,10 +49,28 @@ namespace Nop.Web.Framework.Mvc.Routing
             {
                 //passed redirect URL may contain non-ASCII characters, that are not allowed now (see https://github.com/aspnet/KestrelHttpServer/issues/1144)
                 //so we force to encode this URL before processing
-                result.Url = WebUtility.UrlDecode(result.Url);
+                var url = WebUtility.UrlDecode(result.Url);
+                var urlSplited = url.Split("?");
+                var urlEscaped = string.Join("/", urlSplited[0].Split("/").Select(s => Uri.EscapeDataString(s)));
+
+                result.Url = urlSplited.Length > 1 ? $"{urlEscaped}?{EscapeQueryString(urlSplited[1])}" : urlEscaped;
             }
 
             return base.ExecuteAsync(context, result);
+        }
+        private static string EscapeQueryString(string queryString)
+        {
+            var query = queryString.Split('&', '=');
+            for (var i = 0; i < query.Length; i++)
+            {
+                //odd elements are all values to be encoded
+                if (i % 2 == 1)
+                {
+                    var data = Uri.EscapeDataString(query[i]);
+                    queryString = queryString.Replace(query[i], data);
+                }
+            }
+            return queryString;
         }
 
         #endregion
